@@ -1,2 +1,9 @@
+# folders
+*pycache*
+# !Server*
+
+# Data files
 *.json
+
+# test files
 test*

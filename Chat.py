@@ -1,49 +1,34 @@
-from User_Login import *
-from time import localtime, strftime, sleep
-from os import system, name
+from User_Login import Login_To_Account, clear
+from json import dump
+from time import gmtime, sleep
 
-def clear():
-   # for windows
-   if name == 'nt':
-        _ = system('cls')
-   # for mac and linux
-   else:
-        _ = system('clear')
+# Check if the user exists or not (for register)
+UserName = Login_To_Account()
 
-sleep(1)
+# Clear the terminal
 clear()
 
-user_inputs = dict()
-
-def getting_messege(user_inputs):
+user_inputs = {"text": "", "time": "", "day": "", "month": "", "year": ""}
+while True:
     try:
-        # creating text file where messeges save
-        messege_file = open("data.json", "a+")
+        # Saving chats
+        messege_file = open("./Server/data.json", "a+")
 
-        # getting messege
-        text_input = input("Enter your messege: ")
+        # Start chatting
+        text_input = input(f'{UserName}: ')
+
+        # Chat properties (text, time, ...)
         user_inputs["text"] = text_input
-        # describe the time the messege sent
-        user_inputs["time"] = strftime("%H:%M", localtime())
-        user_inputs["day"] = strftime("%d", localtime())
-        user_inputs["month"] = strftime("%b", localtime())
-        user_inputs["year"] = strftime("%Y", localtime())
-        # if user wants to leave
-        if text_input.lower() == "exit":
-            print("you left")
-            exit()
+        Chat_Time = gmtime()
+        user_inputs["time"] = f'{Chat_Time.tm_hour}:{Chat_Time.tm_min}'
+        user_inputs["day"], user_inputs["month"], user_inputs["year"] = Chat_Time.tm_mday, Chat_Time.tm_mon, Chat_Time.tm_year
+
         # sending messeges to text file
         dump(user_inputs, messege_file)
         messege_file.write('\n')
         messege_file.close()
-        # messege_file.write(str(user_inputs["text"] + "\n"))
-        # messege_file.write(str(user_inputs["time"] + "\n"))
-        # messege_file.write("\n")
-    # if input has error
+
     except:
-        print("Program closed.")
+        print("Exit!")
         messege_file.close()
         exit()
-
-while True:
-    getting_messege(user_inputs)
