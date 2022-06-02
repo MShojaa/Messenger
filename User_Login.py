@@ -1,6 +1,5 @@
 from json import dump, loads
 from os import system, name
-from pty import slave_open
 from time import sleep
 
 def Register():
