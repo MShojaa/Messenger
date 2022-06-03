@@ -1,7 +1,7 @@
 from json import dump, loads
 from os import system, name
 
-ServerAddress = "./Server/"
+ServerAddress = "../Server/"
 UserAddress = "User_Server.json"
 DataAddress = "data.json"
 LocalAddress = "./User_Local.json"
